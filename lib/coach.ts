@@ -39,8 +39,8 @@ export type CoachingResult = {
   createdAt: number;
 };
 
-const API_ENDPOINT = process.env.EXPO_PUBLIC_WEAVEX_API_ENDPOINT;
-const MODEL = process.env.EXPO_PUBLIC_WEAVEX_MODEL;
+const API_ENDPOINT = process.env.EXPO_PUBLIC_OPENAI_API_ENDPOINT;
+const MODEL = process.env.EXPO_PUBLIC_OPENAI_MODEL;
 
 const focusMap: Record<CoachingFocus, string> = {
   soothe: '先安抚情绪，再轻柔地提出边界或需求',

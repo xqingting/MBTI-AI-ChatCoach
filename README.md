@@ -1,69 +1,70 @@
-# MBTI 聊天器
+# MBTI Chat Coach
 
-一个专注于**「原话→分析→优化表达」**的移动端体验：选择双方 MBTI、一次填写记忆胶囊、输入对方语句与自己的本能回复，随后由大模型输出语气诊断、措辞替换与下一步行动建议。
+一款面向普通用户的 MBTI 聊天教练：把“想怼又怕伤人”的本能回复交给它，几秒内就能得到“既走心又守边界”的表达建议。只需输入双方 MBTI、关系背景以及刚刚发生的对话，它就会：
 
-## 主要特性
+- 预测对方会如何解读你的语气 & 为什么；
+- 输出 1~3 条真人感候选回复（长度贴近原对话）；
+- 提供“为什么这样说更好”的解释与语气提示；
+- 支持一键复制回复，直接贴回聊天界面。
 
-- 🎯 **记忆胶囊**：AsyncStorage 自动持久化双方 MBTI、称谓、关系标签以及背景碎片，一次设定后每次打开都能延续状态。
-- 🌈 **原生质感 UI**：双卡片布局、渐变英雄区、语气控制台，适配暗色主题的原生手势体验。
-- 🧭 **首次弹窗设定**：新用户打开即弹窗填写双方 MBTI、称谓与关系，后续只在页面底部需要时修改即可。
-- 🧠 **结构化分析**：调用 `grok-4-fast` 输出 JSON，聚焦“对方会怎么想 & 为什么”，并生成 1~3 条真人感候选回复。
-- 📚 **速查手册**：第二个 Tab 内置 16 型人格速查卡，随时翻阅对方的沟通偏好与舒缓方式。
+## Demo Highlights
 
-## 快速开始
+- **一次设定，持续记忆**：首次打开会弹窗收集双方 MBTI、称谓、关系标签，之后自动复用。
+- **聊天优先的原生体验**：渐变 hero、暗色卡片、底部高级设置，手指一滑即可复制或切换候选回复。
+- **MBTI 速查手册**：第二个 Tab 展示 16 型人格的冲突盲点 & 舒缓策略，聊天前快速“复盘对方”。
+- **可拓展的 AI 引擎**：通过环境变量即可替换 API Key、代理地址、模型名称，默认使用 `grok-4-fast`。
 
-1. 安装依赖
-   ```bash
-   npm install
-   ```
-2. 复制环境变量模板并填入自己的 API Key
-   ```bash
-   cp .env.example .env
-   ```
-   在 `.env` 中设置（示例）：
-   ```
-   EXPO_PUBLIC_WEAVEX_API_KEY=sk-********
-   EXPO_PUBLIC_WEAVEX_API_ENDPOINT=https://openai.weavex.tech/v1/chat/completions
-   EXPO_PUBLIC_WEAVEX_MODEL=grok-4-fast
-   ```
-   > 三个变量缺一不可：密钥、API 代理地址、模型名都集中在这个文件里，便于开源时替换。`.env` 已在 `.gitignore` 中，切勿把真实 Key 提交到仓库。
-3. 运行本地开发
-   ```bash
-   npx expo start
-   ```
-4. 按照 Expo CLI 指引在模拟器、真机或网页中预览。
+## 三步启动（超简单）
 
-## 工作流程
+```bash
+# 1. 下载仓库代码
+git clone https://github.com/xqingting/MBTI-AI-ChatCoach.git
 
-1. 在「聊天教练」页选择双方 MBTI，补充称谓、关系标签以及最近需要记住的背景。
-2. 粘贴/输入对方原话与自己的本能回复，选择本轮对话的目标（安抚 / 澄清 / 共创）以及语气力度。
-3. 点击「生成分析 & 优化表达」，得到对方可能的解读 + 1~3 条候选回复。点选任意按钮即可查看“为什么这样回更好”与语气提示。
-4. 第二个 Tab 可随时查看 16 型人格的沟通速查卡，帮助重新 framing 对方的感受。
+# 2. 进入项目目录
+cd MBTI-AI-ChatCoach
 
-## 配置模型 API
+# 3. 安装依赖（Expo + React Native 相关包）
+npm install
 
-`lib/coach.ts` 会从环境变量中读取所有模型配置，因此发布或分享仓库时只需要共享 `.env.example`：
+# 4. 复制并填写环境变量（模型 Key / Endpoint / Model）
+cp .env.example .env   # 然后打开 .env，写入自己的配置
 
-| 变量名 | 用途 |
+# 5. 启动开发服，扫码就能体验
+npx expo start         # 可选择 Expo Go、模拟器或 Web
+```
+
+> TIPS：Expo CLI 启动后扫描二维码或访问网址即可体验。记得先在 `.env` 中设置 API 相关变量，详见下方「配置模型 API」。
+
+## 配置模型 API（重点）
+
+所有大模型配置都集中在 `.env`，开源/部署时只需替换这三项即可：
+
+| 变量名 | 说明 |
 | --- | --- |
-| `EXPO_PUBLIC_WEAVEX_API_KEY` | OpenAI 代理的访问密钥 |
-| `EXPO_PUBLIC_WEAVEX_API_ENDPOINT` | `chat/completions` 的完整地址，可替换为其他代理 |
-| `EXPO_PUBLIC_WEAVEX_MODEL` | 想要调用的模型名称，例如 `grok-4-fast` |
+| `EXPO_PUBLIC_OPENAI_API_KEY` | OpenAI 代理的 Key（请勿提交真实 Key） |
+| `EXPO_PUBLIC_OPENAI_API_ENDPOINT` | `chat/completions` 接口地址，例如 `https://openai.weavex.tech/v1/chat/completions` |
+| `EXPO_PUBLIC_OPENAI_MODEL` | 使用的模型名称，如 `grok-4-fast` |
 
-启动时若缺失任何一项，前端会提示补全。你也可以在 `.env` 中换成其他模型/地址，实现一键切换。
+应用启动时会校验三项配置，缺失会直接提示。你也可以切换为其他代理/模型，比如自建 OpenAI 兼容服务，只需更新 `.env` 即可。
 
-## AI 调用说明
+## 使用流程
 
-- **鉴权**：通过这三个环境变量从 `.env` 注入，前端在请求头里写入 `Authorization: Bearer <key>`。
-- **提示词**：要求模型返回严格 JSON，包含语气诊断、候选回复、MBTI 互动要点等，前端解析失败时会直接显示原文。
+1. **登陆页**：填写双方 MBTI、称谓、关系背景（一次即可），主页顶部始终显示“我 / Ta”的能量标签。
+2. **聊天教练**：输入“对方刚说的原话”和“自己的本能回复”，点击“生成分析 & 优化表达”。
+3. **候选回复**：查看“对方可能的解读”，在按钮式候选中选择一条，立即看到“为什么这样回复更好”并一键复制。
+4. **高级设置（可选）**：需要强控语气时，在底部“打开语气控制”中手动指定对话目标与语气力度。
+5. **速查手册**：切换到第二个 Tab，查阅 16 型人格的沟通偏好、冲突盲点与舒缓方式。
 
-## 目录结构速览
+## 目录结构
 
 ```
-app/(tabs)         主要页面（聊天教练 / 速查手册）
-constants/mbti.ts  16 型人格文案与分组元数据
-hooks/useMemoryCapsule.ts  AsyncStorage 持久化记忆
-lib/coach.ts       与 grok-4-fast 的通讯与结果规整
+.env.example                      环境变量示例（Key / Endpoint / Model）
+app/(tabs)                        Pages：聊天教练、MBTI 速查
+components / hooks / lib          UI 组件、记忆胶囊、AI 请求封装
+constants/mbti.ts                 16 型人格文案 & 分组
+scripts/reset-project.js          Expo 模板自带脚本
 ```
 
-欢迎继续扩展，例如：添加历史记录、分享卡片或语音输入等。Happy hacking! 🎧
+## 路线图 & 反馈
+
+欢迎在 Issue 区提出使用体验、文案想法或 PR。一句话介绍你最常遇到的聊天场景，我会基于这些场景继续打磨提示词和 UI。Enjoy the chat magic! ✨
