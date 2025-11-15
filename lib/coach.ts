@@ -79,16 +79,16 @@ export const requestCoaching = async ({
   memory: MemorySnapshot;
   conversation: ConversationDraft;
 }): Promise<CoachingResult> => {
-  const apiKey = process.env.EXPO_PUBLIC_WEAVEX_API_KEY;
+  const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
 
   if (!apiKey) {
-    throw new Error('缺少 EXPO_PUBLIC_WEAVEX_API_KEY，请参考 README 进行配置。');
+    throw new Error('缺少 EXPO_PUBLIC_OPENAI_API_KEY，请参考 README 进行配置。');
   }
   if (!API_ENDPOINT) {
-    throw new Error('缺少 EXPO_PUBLIC_WEAVEX_API_ENDPOINT，请在 .env 中设置模型地址。');
+    throw new Error('缺少 EXPO_PUBLIC_OPENAI_API_ENDPOINT，请在 .env 中设置模型地址。');
   }
   if (!MODEL) {
-    throw new Error('缺少 EXPO_PUBLIC_WEAVEX_MODEL，请在 .env 中设置模型名称。');
+    throw new Error('缺少 EXPO_PUBLIC_OPENAI_MODEL，请在 .env 中设置模型名称。');
   }
 
   const partnerProfile = getMBTIProfile(memory.partnerMbti);

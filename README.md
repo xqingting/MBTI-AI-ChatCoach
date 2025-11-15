@@ -16,6 +16,7 @@
 
 ## 快速启动
 
+### 项目安装
 ```bash
 # 1. 下载仓库代码
 git clone https://github.com/xqingting/MBTI-AI-ChatCoach.git
@@ -25,28 +26,31 @@ cd MBTI-AI-ChatCoach
 
 # 3. 安装依赖（Expo + React Native 相关包）
 npm install
+```
 
+### 配置模型 API
+
+所有大模型配置都集中在 `.env`，开源/部署时只需替换这三项即可：
+
+```bash
 # 4. 复制并填写环境变量（模型 Key / Endpoint / Model）
 cp .env.example .env   # 然后打开 .env，写入自己的配置
+```
 
+| 变量名 | 说明 |
+| --- | --- |
+| `EXPO_PUBLIC_OPENAI_API_KEY` | OpenAI 代理的 Key |
+| `EXPO_PUBLIC_OPENAI_API_ENDPOINT` | `chat/completions` 接口地址，例如 `https://openai.weavex.tech/v1/chat/completions` |
+| `EXPO_PUBLIC_OPENAI_MODEL` | 使用的模型名称，如 `grok-4-fast` |
+
+应用启动时会校验三项配置，缺失会直接提示。你也可以切换为其他代理/模型，比如自建 OpenAI 兼容服务，更新 `.env` 即可。
+
+```bash
 # 5. 启动开发服，扫码就能体验
 npx expo start         # 可选择 Expo Go、模拟器或 Web
 ```
 
-> TIPS：Expo CLI 启动后扫描二维码或访问网址即可体验。记得先在 `.env` 中设置 API 相关变量，详见下方「配置模型 API」。
-
-## 配置模型 API（重点）
-
-所有大模型配置都集中在 `.env`，开源/部署时只需替换这三项即可：
-
-| 变量名 | 说明 |
-| --- | --- |
-| `EXPO_PUBLIC_OPENAI_API_KEY` | OpenAI 代理的 Key（请勿提交真实 Key） |
-| `EXPO_PUBLIC_OPENAI_API_ENDPOINT` | `chat/completions` 接口地址，例如 `https://openai.weavex.tech/v1/chat/completions` |
-| `EXPO_PUBLIC_OPENAI_MODEL` | 使用的模型名称，如 `grok-4-fast` |
-
-应用启动时会校验三项配置，缺失会直接提示。你也可以切换为其他代理/模型，比如自建 OpenAI 兼容服务，只需更新 `.env` 即可。
-
+> TIPS：Expo CLI 启动后扫描二维码或访问网址即可体验。
 ## 使用流程
 
 1. **登陆页**：填写双方 MBTI、称谓、关系背景（一次即可），主页顶部始终显示“我 / Ta”的能量标签。
